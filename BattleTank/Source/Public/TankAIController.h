@@ -17,8 +17,4 @@ private:
 	virtual void BeginPlay() override; //something with inheritance
 
 	virtual void Tick(float DeltaTime) override;
-	
-	ATank *GetControlledTank() const;
-
-	ATank *GetPlayerTank() const;
 };
