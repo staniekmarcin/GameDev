@@ -50,7 +50,7 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    if (!GetPawn()) { return; } // FIX for crash after Player Tank Death
+    if (!GetPawn()) { return; } //PROBABLY  FIX for crash after Player Tank Death
     AimTowardsCrosshair();
 }
 
