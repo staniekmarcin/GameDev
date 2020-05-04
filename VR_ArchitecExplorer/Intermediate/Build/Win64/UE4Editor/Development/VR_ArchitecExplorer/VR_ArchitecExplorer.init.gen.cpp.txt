@@ -1,3 +1,0 @@
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Intermediate\Build\Win64\UE4Editor\Development\VR_ArchitecExplorer\Definitions.VR_ArchitecExplorer.h
-G:\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-G:\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h

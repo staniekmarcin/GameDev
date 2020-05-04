@@ -1,9 +1,0 @@
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Intermediate\Build\Win64\UE4Editor\Development\VR_ArchitecExplorer\Definitions.VR_ArchitecExplorer.h
-G:\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-G:\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Source\VR_ArchitecExplorer/VR_ArchitecExplorerGameModeBase.h
-G:\UE_4.24\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
-G:\UE_4.24\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
-G:\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
-G:\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Intermediate\Build\Win64\UE4Editor\Inc\VR_ArchitecExplorer\VR_ArchitecExplorerGameModeBase.generated.h

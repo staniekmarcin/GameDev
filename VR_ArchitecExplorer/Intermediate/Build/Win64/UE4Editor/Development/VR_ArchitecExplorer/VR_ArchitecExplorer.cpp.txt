@@ -1,2 +1,0 @@
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Intermediate\Build\Win64\UE4Editor\Development\VR_ArchitecExplorer\Definitions.VR_ArchitecExplorer.h
-C:\Users\stanik\Desktop\GameDev\game-dev\VR_ArchitecExplorer\Source\VR_ArchitecExplorer\VR_ArchitecExplorer.h
