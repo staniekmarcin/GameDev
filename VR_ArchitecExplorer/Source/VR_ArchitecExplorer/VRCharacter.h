@@ -49,9 +49,6 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		class UStaticMeshComponent* DestinationMarker;
 
-	/*UPROPERTY()
-		class UNavigationSystemV1* navSystem;*/
-
 private:
 
 	UPROPERTY(EditAnywhere)
