@@ -10,6 +10,8 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "MotionControllerComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SplineComponent.h"
+
 
 
 // Sets default values
@@ -39,6 +41,9 @@ AVRCharacter::AVRCharacter()
 	LeftController->SetupAttachment(VRRoot);
 	LeftController->SetTrackingSource(EControllerHand::Left);
 	//LeftController.bDisplayDeviceModel = true;
+
+	TeleportPath = CreateDefaultSubobject<USplineComponent>(TEXT("TeleportPath"));
+	TeleportPath->SetupAttachment(LeftController);
 }
 
 // Called when the game starts or when spawned
@@ -69,7 +74,7 @@ void AVRCharacter::Tick(float DeltaTime)
 	UpdateBlinkers();
 }
 
-bool AVRCharacter::FindTeleportDestination(FVector& OutLocation)
+bool AVRCharacter::FindTeleportDestination(TArray<FVector>& OutPath, FVector& OutLocation)
 {
 	FVector Start = LeftController->GetComponentLocation();
 	FVector Look = LeftController->GetForwardVector();
@@ -89,6 +94,11 @@ bool AVRCharacter::FindTeleportDestination(FVector& OutLocation)
 
 	if (!bHit) return false;
 
+	for (FPredictProjectilePathPointData PointData : Result.PathData)
+	{
+		OutPath.Add(PointData.Location);
+	}
+
 	FNavLocation NavLocation;
 	bool bOnNavMesh = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld())->ProjectPointToNavigation(Result.HitResult.Location, NavLocation, TeleportProjectionExtent);
 	//bool bOnNavMesh = GetWorld()->GetNavigationSystem()->ProjectPointToNavigation(Result.HitResult.Location, NavLocation, TeleportProjectionExtent);
@@ -101,18 +111,61 @@ bool AVRCharacter::FindTeleportDestination(FVector& OutLocation)
 
 void AVRCharacter::UpdateDestinationMarker()
 {
+	TArray<FVector> Path;
 	FVector Location;
-	bool bHasDestination = FindTeleportDestination(Location);
+	bool bHasDestination = FindTeleportDestination(Path, Location);
 
 	if (bHasDestination)
 	{
 		DestinationMarker->SetVisibility(true);
 
 		DestinationMarker->SetWorldLocation(Location);
+
+		UpdateSpline(Path);
+
 	}
 	else
 	{
 		DestinationMarker->SetVisibility(false);
+	}
+}
+
+void AVRCharacter::UpdateSpline(const TArray<FVector>& Path)
+{
+	TeleportPath->ClearSplinePoints(false);
+
+	for (int32 i = 0; i < Path.Num(); ++i)
+	{
+		FVector LocalPosition = TeleportPath->GetComponentTransform().InverseTransformPosition(Path[i]);
+		FSplinePoint Point(i, LocalPosition, ESplinePointType::Curve);
+		TeleportPath->AddPoint(Point, false);
+	}
+
+	TeleportPath->UpdateSpline();
+}
+
+void AVRCharacter::BeginTeleport()
+{
+
+	StartFade(0, 1);
+
+	FTimerHandle Handle;
+	GetWorldTimerManager().SetTimer(Handle, this, &AVRCharacter::FinishTeleport, TeleportFadeTime);
+}
+
+void AVRCharacter::FinishTeleport()
+{
+	SetActorLocation(DestinationMarker->GetComponentLocation() + GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+
+	StartFade(1, 0);
+}
+
+void AVRCharacter::StartFade(float FromAlpha, float ToAlpha)
+{
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (PC != nullptr)
+	{
+		PC->PlayerCameraManager->StartCameraFade(FromAlpha, ToAlpha, TeleportFadeTime, FLinearColor::Black);
 	}
 }
 
@@ -173,7 +226,7 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("Forward_Vive"), this, &AVRCharacter::MoveForward);
 	PlayerInputComponent->BindAxis(TEXT("Backward_Vive"), this, &AVRCharacter::MoveForward);
 
-	// Uncomment if you want to move right lef tbut then blinker conter will be buggy
+	// Uncomment if you want to move right left but then blinker center will be buggy
 	//PlayerInputComponent->BindAxis(TEXT("Right"), this, &AVRCharacter::MoveRight);
 	//PlayerInputComponent->BindAxis(TEXT("Right_Vive"), this, &AVRCharacter::MoveRight);
 	//PlayerInputComponent->BindAxis(TEXT("Left_Vive"), this, &AVRCharacter::MoveRight);
@@ -192,27 +245,3 @@ void AVRCharacter::MoveRight(float throttle)
 	AddMovementInput(throttle * Camera->GetRightVector());
 }
 
-void AVRCharacter::BeginTeleport()
-{
-
-	StartFade(0, 1);
-
-	FTimerHandle Handle;
-	GetWorldTimerManager().SetTimer(Handle, this, &AVRCharacter::FinishTeleport, TeleportFadeTime);
-}
-
-void AVRCharacter::FinishTeleport()
-{
-	SetActorLocation(DestinationMarker->GetComponentLocation() + GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
-
-	StartFade(1, 0);
-}
-
-void AVRCharacter::StartFade(float FromAlpha, float ToAlpha)
-{
-	APlayerController* PC = Cast<APlayerController>(GetController());
-	if (PC != nullptr)
-	{
-		PC->PlayerCameraManager->StartCameraFade(FromAlpha, ToAlpha, TeleportFadeTime, FLinearColor::Black);
-	}
-}

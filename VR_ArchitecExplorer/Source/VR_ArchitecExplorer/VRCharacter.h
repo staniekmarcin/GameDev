@@ -28,8 +28,10 @@ public:
 
 private:
 
-	bool FindTeleportDestination(FVector& OutLocation);
+	bool FindTeleportDestination(TArray<FVector>& OutPath, FVector& OutLocation);
 	void UpdateDestinationMarker();
+	void UpdateSpline(const TArray<FVector>& Path);
+	
 	void UpdateBlinkers();
 	FVector2D GetBlinkerCenter();
 
@@ -38,7 +40,6 @@ private:
 
 	void BeginTeleport();
 	void FinishTeleport();
-
 	void StartFade(float FromAlpha, float ToAlpha);
 
 private:
@@ -51,6 +52,9 @@ private:
 		class UMotionControllerComponent* RightController;
 	UPROPERTY()
 		class USceneComponent* VRRoot;
+
+	UPROPERTY(VisibleAnywhere)
+		class USplineComponent* TeleportPath;
 
 	UPROPERTY(VisibleAnywhere)
 		class UStaticMeshComponent* DestinationMarker;
