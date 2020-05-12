@@ -8,11 +8,15 @@
 		{
 			"sources": [
 				{
-					"mode": "button",
-					"path": "/user/hand/left/input/grip",
+					"mode": "dpad",
+					"path": "/user/hand/left/input/trackpad",
+					"parameters":
+					{
+						"sub_mode": "click"
+					},
 					"inputs":
 					{
-						"click":
+						"west":
 						{
 							"output": "/actions/main/in/Teleport"
 						}

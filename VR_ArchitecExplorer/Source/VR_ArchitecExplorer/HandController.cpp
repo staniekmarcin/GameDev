@@ -2,6 +2,9 @@
 
 
 #include "HandController.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/PlayerController.h"
+
 
 
 
@@ -38,10 +41,18 @@ void AHandController::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherAc
 	bool bNewCanClimb = CanClimb();
 	if (!bCanClimb && bNewCanClimb)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Can Climb!"));
+		UE_LOG(LogTemp, Warning, TEXT("Can Climb!")); 
+		APawn* Pawn = Cast<APawn>(GetAttachParentActor());
+		if (Pawn != nullptr)
+		{
+			APlayerController* Controller = Cast<APlayerController>(Pawn->GetController());
+			if (Controller != nullptr)
+			{
+				Controller->PlayHapticEffect(HapticEffect, MotionController->GetTrackingSource());
+			}
+		}
 	}
 	bCanClimb = bNewCanClimb;
-	UE_LOG(LogTemp, Warning, TEXT("Can't Climb!"));
 }
 
 void AHandController::ActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor)
