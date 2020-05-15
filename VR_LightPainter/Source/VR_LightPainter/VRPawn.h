@@ -6,8 +6,7 @@
 #include "GameFramework/Pawn.h"
 
 #include "Camera/CameraComponent.h"
-#include "HandController.h"
-
+#include "HandControllerBase.h"
 #include "VRPawn.generated.h"
 
 UCLASS()
@@ -25,15 +24,15 @@ protected:
 
 private:
 
-	void RightTriggerPressed() { if (RightHandController) RightHandController->TriggerPressed(); }
-	void RightTriggerRealeased() { if (RightHandController) RightHandController->TriggerReleased(); }
+	void RightTriggerPressed() { if (RightPaintBrushHandController) RightPaintBrushHandController->TriggerPressed(); }
+	void RightTriggerRealeased() { if (RightPaintBrushHandController) RightPaintBrushHandController->TriggerReleased(); }
 
 	void Save();
 	void Load();
 
 	// Config
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AHandController> HandControllerClass;
+	TSubclassOf<AHandControllerBase> PaintBrushHandControllerClass;
 
 	// Components
 	UPROPERTY(VisibleAnywhere)
@@ -44,5 +43,5 @@ private:
 
 	// References
 	UPROPERTY()
-	AHandController* RightHandController;
+	AHandControllerBase* RightPaintBrushHandController;
 };

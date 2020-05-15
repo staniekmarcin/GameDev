@@ -22,11 +22,11 @@ void AVRPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (HandControllerClass)
+	if (PaintBrushHandControllerClass)
 	{
-		RightHandController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
-		RightHandController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
-		RightHandController->SetOwner(this);
+		RightPaintBrushHandController = GetWorld()->SpawnActor<AHandControllerBase>(PaintBrushHandControllerClass);
+		RightPaintBrushHandController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		RightPaintBrushHandController->SetOwner(this);
 
 	}
 }

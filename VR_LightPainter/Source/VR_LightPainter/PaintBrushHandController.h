@@ -7,19 +7,20 @@
 
 #include "MotionControllerComponent.h"
 #include "Stroke.h"
+#include "HandControllerBase.h"
 
-#include "HandController.generated.h"
+#include "PaintBrushHandController.generated.h"
 
 UCLASS()
-class VR_LIGHTPAINTER_API AHandController : public AActor
+class VR_LIGHTPAINTER_API APaintBrushHandController : public AHandControllerBase
 {
 	GENERATED_BODY()
 	
 public:	
-	AHandController();
+	APaintBrushHandController();
 
-	void TriggerPressed();
-	void TriggerReleased();
+	void TriggerPressed() override;
+	void TriggerReleased() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -31,10 +32,6 @@ private:
 	// Config
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AStroke> StrokeClass;
-
-	// Components
-	UPROPERTY(VisibleAnywhere)
-	UMotionControllerComponent* MotionController;
 
 	// State 
 	AStroke* CurrentStroke;
