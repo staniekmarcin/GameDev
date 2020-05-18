@@ -16,5 +16,7 @@ void UPaintingGridCard::SetPaintingName(FString NewPaintingName)
 
 void UPaintingGridCard::CardButtonClicked()
 {
+	//TODO: Refactor out magic string.
+
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("TestMap"), true, "SlotName = " + PaintingName );
 }
