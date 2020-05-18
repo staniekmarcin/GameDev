@@ -19,7 +19,7 @@ class VR_LIGHTPAINTER_API UPaintingGrid : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void AddPainting();
+	void AddPainting(int32 PaintingIndex);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (BindWidget))

@@ -3,6 +3,8 @@
 
 #include "PaintingPicker.h"
 
+#include "/game-dev/VR_LightPainter/Source/VR_LightPainter/Saving/PainterSaveGameIndex.h"
+
 #include "PaintingGrid.h"
 
 APaintingPicker::APaintingPicker()
@@ -27,7 +29,13 @@ void APaintingPicker::BeginPlay()
 	UPaintingGrid* PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
 	if (!PaintingGridWidget) return;
 
-	PaintingGridWidget->AddPainting();
+	int32 Index = 0;
+	for (FString SlotName : UPainterSaveGameIndex::Load()->GetSlotNames())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Painting Index: "));
+		PaintingGridWidget->AddPainting(Index);
+		++Index;
+	}
 }
 
 
