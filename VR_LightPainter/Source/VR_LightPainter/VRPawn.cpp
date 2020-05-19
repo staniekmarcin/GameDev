@@ -54,16 +54,19 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), EInputEvent::IE_Pressed, this, &AVRPawn::RightTriggerPressed);
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), EInputEvent::IE_Released, this, &AVRPawn::RightTriggerRealeased);
 
-	//PlayerInputComponent->BindAction(TEXT("PageRight"), EInputEvent::IE_Released, this, &AVRPawn::PaginateRightAxisInput);
+	PlayerInputComponent->BindAction(TEXT("PageRight"), EInputEvent::IE_Pressed, this, &AVRPawn::PaginateRightAxisInput);
+
+	PlayerInputComponent->BindAction(TEXT("PageLeft"), EInputEvent::IE_Pressed, this, &AVRPawn::PaginateLeftAxisInput);
 
 
-	PlayerInputComponent->BindAxis(TEXT("PaginateRight"), this, &AVRPawn::PaginateRightAxisInput);
+	//PlayerInputComponent->BindAxis(TEXT("PaginateRight"), this, &AVRPawn::PaginateRightAxisInput);
 
 }
 
-void  AVRPawn::PaginateRightAxisInput(float AxisValue)
+void AVRPawn::PaginateRightAxisInput()
 {
-	int32 PaginationOffset = 0;
+	UE_LOG(LogTemp, Warning, TEXT("Right Page"));
+	/*int32 PaginationOffset = 0;
 	PaginationOffset += AxisValue > PaginationThumbstickThreshold ? 1 : 0;
 	PaginationOffset += AxisValue < -PaginationThumbstickThreshold ? -1 : 0;
 
@@ -72,7 +75,30 @@ void  AVRPawn::PaginateRightAxisInput(float AxisValue)
 		UpdateCurrentPage(PaginationOffset);
 	}
 
-	LastPaginationOffset = PaginationOffset;
+	LastPaginationOffset = PaginationOffset;*/
+	UE_LOG(LogTemp, Warning, TEXT("LastPaginationOffset %d "), LastPaginationOffset);
+
+
+	//PaginationOffset = 0;
+	UE_LOG(LogTemp, Warning, TEXT("PaginationOffset initialised %d "), PaginationOffset);
+
+	PaginationOffset += 1;
+	UE_LOG(LogTemp, Warning, TEXT("PaginationOffset after +1 %d "), PaginationOffset);
+
+	if (PaginationOffset != LastPaginationOffset && PaginationOffset != 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("PaginationOffset in loop %d "), PaginationOffset);
+		UpdateCurrentPage(PaginationOffset);
+	}
+	UE_LOG(LogTemp, Warning, TEXT("PaginationOffset after loop %d "), PaginationOffset);
+
+	LastPaginationOffset = PaginationOffset; 
+
+}
+
+void AVRPawn::PaginateLeftAxisInput()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Left Page"));
 }
 
 void AVRPawn::UpdateCurrentPage(int32 Offset)
