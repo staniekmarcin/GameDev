@@ -1,0 +1,23 @@
+
+
+
+#include "WidgetTouchingComponent.h"
+
+
+void UWidgetTouchingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (IsOverInteractableWidget() && !bIsClicked)
+	{
+		PressPointerKey(EKeys::LeftMouseButton);
+		UE_LOG(LogTemp, Warning, TEXT("Pressed"));
+		bIsClicked = true;
+	}
+	if (!IsOverInteractableWidget() && bIsClicked)
+	{
+		ReleasePointerKey(EKeys::LeftMouseButton);
+		UE_LOG(LogTemp, Warning, TEXT("Release"));
+		bIsClicked = false;
+	}
+}
