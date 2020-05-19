@@ -17,6 +17,20 @@ void UPaintingGrid::AddPainting(int32 PaintingIndex, FString PaintingName)
 	CardContainer->AddChild(NewWidget);
 }
 
+void UPaintingGrid::AddPaginationDot(bool bActive)
+{
+	if (!PaginationDots)
+	{
+		return;
+	}
+	auto Dot = CreateWidget<UPaginationDot>(GetWorld(), PaginationDotClass);
+	if (!Dot)
+	{
+		return;
+	}
+	PaginationDots->AddChild(Dot);
+}
+
 void UPaintingGrid::ClearPaintings()
 {
 	for (int32 i = 0; i < PaintingGrid->GetChildrenCount(); i++)

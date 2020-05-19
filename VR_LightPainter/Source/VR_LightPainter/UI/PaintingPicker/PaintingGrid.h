@@ -7,6 +7,8 @@
 
 #include "Components/UniformGridPanel.h"
 #include "PaintingGridCard.h"
+#include "Components/HorizontalBox.h"
+#include "PaginationDot.h"
 
 
 #include "PaintingGrid.generated.h"
@@ -22,13 +24,20 @@ class VR_LIGHTPAINTER_API UPaintingGrid : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable)
 	void AddPainting(int32 PaintingIndex, FString PaintingName);
-	
+	void AddPaginationDot(bool bActive);
+
 	void ClearPaintings();
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (BindWidget))
 	UUniformGridPanel* PaintingGrid;
 
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (BindWidget))
+	UHorizontalBox* PaginationDots;
+
 public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UPaintingGridCard> GridCardClass;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UPaginationDot> PaginationDotClass;
 };
