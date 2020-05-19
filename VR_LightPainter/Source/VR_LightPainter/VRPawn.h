@@ -28,7 +28,6 @@ private:
 	void RightTriggerRealeased() { if (RightPaintBrushHandController) RightPaintBrushHandController->TriggerReleased(); }
 
 	void Save();
-	void Load();
 
 	// Config
 	UPROPERTY(EditDefaultsOnly)

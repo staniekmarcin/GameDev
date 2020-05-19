@@ -3,7 +3,7 @@
 
 #include "PaintingPicker.h"
 
-#include "/game-dev/VR_LightPainter/Source/VR_LightPainter/Saving/PainterSaveGameIndex.h"
+#include "VR_LightPainter/Saving/PainterSaveGameIndex.h"
 
 #include "PaintingGrid.h"
 
