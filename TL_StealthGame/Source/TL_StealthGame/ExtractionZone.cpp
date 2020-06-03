@@ -2,6 +2,9 @@
 
 
 #include "ExtractionZone.h"
+
+#include "TL_StealthGameCharacter.h"
+#include "TL_StealthGameGameMode.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
 
@@ -26,7 +29,17 @@ AExtractionZone::AExtractionZone()
 void AExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("Overlapped with extraction zone"));	
+	//UE_LOG(LogTemp, Log, TEXT("Overlapped with extraction zone"));
+
+	ATL_StealthGameCharacter* MyPawn = Cast<ATL_StealthGameCharacter>(OtherActor);
+	if (MyPawn && MyPawn->bIsCarryingObjective)
+	{
+		ATL_StealthGameGameMode* GM = Cast<ATL_StealthGameGameMode>(GetWorld()->GetAuthGameMode());
+		if (GM)
+		{
+			GM->CompleteMission(MyPawn);
+		}
+	}
 }
 
 

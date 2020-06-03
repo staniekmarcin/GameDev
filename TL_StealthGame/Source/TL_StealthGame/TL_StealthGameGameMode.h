@@ -13,6 +13,11 @@ class ATL_StealthGameGameMode : public AGameModeBase
 
 public:
 	ATL_StealthGameGameMode();
+
+	void CompleteMission(APawn* InstagatorPawn);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
+	void OnMissionCompleted(APawn* InstagatorPawn);
 };
 
 

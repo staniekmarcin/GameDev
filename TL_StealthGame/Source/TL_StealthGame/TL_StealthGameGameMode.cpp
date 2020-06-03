@@ -15,3 +15,14 @@ ATL_StealthGameGameMode::ATL_StealthGameGameMode()
 	// use our custom HUD class
 	HUDClass = ATL_StealthGameHUD::StaticClass();
 }
+
+void ATL_StealthGameGameMode::CompleteMission(APawn* InstagatorPawn)
+{
+	if (InstagatorPawn)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Input Disabled"));
+		InstagatorPawn->DisableInput(nullptr);
+	}
+
+	OnMissionCompleted(InstagatorPawn);
+}
