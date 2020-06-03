@@ -23,6 +23,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="FX")
 	UParticleSystem* PickupFX;
+
+	UPROPERTY(EditDefaultsOnly, Category="Sounds")
+    USoundBase* ObjectivePickedupSound;
 	
 	virtual void BeginPlay() override;
 

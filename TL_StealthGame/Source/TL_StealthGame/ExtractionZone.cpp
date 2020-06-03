@@ -7,6 +7,7 @@
 #include "TL_StealthGameGameMode.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AExtractionZone::AExtractionZone()
 {
@@ -32,14 +33,25 @@ void AExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	//UE_LOG(LogTemp, Log, TEXT("Overlapped with extraction zone"));
 
 	ATL_StealthGameCharacter* MyPawn = Cast<ATL_StealthGameCharacter>(OtherActor);
-	if (MyPawn && MyPawn->bIsCarryingObjective)
+	if (MyPawn == nullptr)
+	{
+		return;
+	}
+	if (MyPawn->bIsCarryingObjective)
 	{
 		ATL_StealthGameGameMode* GM = Cast<ATL_StealthGameGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM)
 		{
 			GM->CompleteMission(MyPawn);
+			UGameplayStatics::PlaySound2D(this, ObjectiveExtractedSound);
 		}
 	}
+	else
+	{
+		
+		UGameplayStatics::PlaySound2D(this, ObjectiveMissingSound);
+	}
+
 }
 
 

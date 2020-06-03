@@ -27,6 +27,7 @@ void AObjectiveActor::BeginPlay()
 void AObjectiveActor::PlayEffects()
 {
 	UGameplayStatics::SpawnEmitterAtLocation(this, PickupFX, GetActorLocation());
+	UGameplayStatics::PlaySound2D(this, ObjectivePickedupSound);
 }
 
 void AObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
