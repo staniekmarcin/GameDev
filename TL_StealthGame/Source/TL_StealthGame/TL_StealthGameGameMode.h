@@ -17,10 +17,10 @@ protected:
 public:
 	ATL_StealthGameGameMode();
 
-	void CompleteMission(APawn* InstagatorPawn);
+	void CompleteMission(APawn* InstagatorPawn, bool bMissionSuccess);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
-	void OnMissionCompleted(APawn* InstagatorPawn);
+	void OnMissionCompleted(APawn* InstagatorPawn, bool bMissionSuccess);
 };
 
 

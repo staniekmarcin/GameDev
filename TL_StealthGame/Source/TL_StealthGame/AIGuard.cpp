@@ -4,6 +4,8 @@
 #include "AIGuard.h"
 #include "Perception/PawnSensingComponent.h"
 #include "DrawDebugHelpers.h"
+#include "TL_StealthGameGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 AAIGuard::AAIGuard()
 {
@@ -29,7 +31,20 @@ void AAIGuard::OnPawnSeen(APawn* SeenPawn)
 	{	
 		return;
 	}
-	DrawDebugSphere(GetWorld(), SeenPawn->GetActorLocation(), 32.0f, 12, FColor::Yellow, false, 10.0f);
+	DrawDebugSphere(
+		GetWorld(),
+		SeenPawn->GetActorLocation(),
+		32.0f,
+		12, FColor::Yellow,
+		false,
+		10.0f
+		);
+
+	ATL_StealthGameGameMode* GM = Cast<ATL_StealthGameGameMode>(GetWorld()->GetAuthGameMode());
+	if (GM)
+	{
+		GM->CompleteMission(SeenPawn, false);
+	}
 }
 
 void AAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, float Volume)

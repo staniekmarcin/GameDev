@@ -17,7 +17,7 @@ ATL_StealthGameGameMode::ATL_StealthGameGameMode()
 	HUDClass = ATL_StealthGameHUD::StaticClass();
 }
 
-void ATL_StealthGameGameMode::CompleteMission(APawn* InstagatorPawn)
+void ATL_StealthGameGameMode::CompleteMission(APawn* InstagatorPawn, bool bMissionSuccess)
 {
 	if (InstagatorPawn)
 	{
@@ -45,6 +45,6 @@ void ATL_StealthGameGameMode::CompleteMission(APawn* InstagatorPawn)
 		}
 	}
 	
-	OnMissionCompleted(InstagatorPawn);
+	OnMissionCompleted(InstagatorPawn, bMissionSuccess);
 	
 }

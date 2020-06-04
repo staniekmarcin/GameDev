@@ -42,7 +42,7 @@ void AExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		ATL_StealthGameGameMode* GM = Cast<ATL_StealthGameGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM)
 		{
-			GM->CompleteMission(MyPawn);
+			GM->CompleteMission(MyPawn, true);
 			UGameplayStatics::PlaySound2D(this, ObjectiveExtractedSound);
 		}
 	}
