@@ -1,6 +1,8 @@
 # game-dev
 part of game development course in UE4.
 
+### TL_Shooter
+first-person shooter <sub><sup>UE 4.25</sup></sub>
 ### 05_SimpleShooter
 third-person shooter (without AssetPacks) <sub><sup>UE 4.25</sup></sub>
 ### BP_Games
