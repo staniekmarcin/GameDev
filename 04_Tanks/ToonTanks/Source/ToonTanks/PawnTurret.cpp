@@ -22,8 +22,6 @@ void APawnTurret::BeginPlay()
 void APawnTurret::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
-    CheckFireCondition();
 }
 
 

@@ -31,7 +31,7 @@ private:
 	float FireRate = 2.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Movement", meta = (AllowPrivateAccess = "true"))
-	float FireRange = 500.0f;
+	float FireRange = 2000.0f;
 	
 	FTimerHandle FireRateTimerHandle;
 	APawnTank* PlayerPawn;
