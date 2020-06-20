@@ -3,7 +3,6 @@
 
 #include "TankGameModeBase.h"
 
-
 #include "Kismet/GameplayStatics.h"
 #include "ToonTanks/PawnTurret.h"
 
@@ -17,6 +16,8 @@ void ATankGameModeBase::BeginPlay()
 
     PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 
+
+    PlayerControllerRef = Cast<APlyareControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
     HandleGameStart();
     
     Super::BeginPlay();
@@ -40,6 +41,12 @@ void ATankGameModeBase::ActorDied(AActor *DeadActor)
     {
         PlayerTank->PawnDestroyed();
         HandleGameOver(false);
+
+        if (PlayerControllerRef)
+        {
+            PlayerControllerRef->SetPlayerEnabledState(false);
+            
+        }
     }
     else if (APawnTurret* DestroyedTurret = Cast<APawnTurret>(DeadActor))
     {
@@ -59,6 +66,16 @@ void ATankGameModeBase::ActorDied(AActor *DeadActor)
 void ATankGameModeBase::HandleGameStart()
 {
    GameStart();
+
+    if (PlayerControllerRef)
+    {
+        PlayerControllerRef->SetPlayerEnabledState(true);
+
+        FTimerHandle PlayerEnabledHandle;
+        FTimerDelegate PlayerEnableDelegate = FTimerDelegate::CreateUObject(PlayerControllerRef, &APlyareControllerBase::SetPlayerEnabledState, true);
+
+        GetWorldTimerManager().SetTimer(PlayerEnabledHandle, PlayerEnableDelegate, StartDelay, false);
+    }
 } 
 
 void ATankGameModeBase::HandleGameOver(bool PlayerWon)

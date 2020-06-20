@@ -24,7 +24,7 @@ void APawnTank::HandleDestruction()
 	Super::HandleDestruction();
 
 	// TODO Hide Player with new function
-	Destroy();
+	//Destroy();
 }
 
 void APawnTank::Tick(float DeltaTime)
