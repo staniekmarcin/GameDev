@@ -18,17 +18,23 @@ public:
 	USHealthComponent();
 
 protected:
+
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly, Category="HealthComponents")
+	UPROPERTY(ReplicatedUsing=OnRep_Health, BlueprintReadOnly, Category="HealthComponents")
 	float Health;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="HealthComponents")
+	UFUNCTION()
+    void OnRep_Health(float OldHealth);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="HealthComponents")
 	float DefaultHealth;
 
 	UFUNCTION()
 	void HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 public:
+
+	float GetHealth() const;	
 
 	UPROPERTY(BlueprintAssignable, Category="Events")
 	FOnHealthChangedSignature OnHealthChanged;
